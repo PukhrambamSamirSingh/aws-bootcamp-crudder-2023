@@ -4,7 +4,7 @@
 
 # Just Learning how to use it from the tut
 
-### Installing AWS CLI
+### Installing and verifying AWS CLI
 
 I was not able to use Gitpod or Github codespaces due to browser issues.
 So I decided to use a local environment.
