@@ -14,13 +14,13 @@ I am providing the instructions I used for my configuration of my local machine 
 
 I did the following steps to install AWS CLI.
 
-**Note to insert image**
+![Installing AWS CLI](assets/week-0-img-1.png)
 I install the AWS CLI via this command in **Command Prompt**:
 ```
 msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
 ```
 
 The command for aws works after closing the command prompt and then reopening it
-
+![Proof of working AWS CLI](assets/week-0-img-2.png)
 
 ## Homework Challenges
