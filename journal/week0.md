@@ -12,7 +12,7 @@ So I decided to use a local environment.
 In order to prove that I am able to use AWS CLI.
 I am providing the instructions I used for my configuration of my local machine on windows.
 
-I did the following steps to install AWS CLI.
+I followed the instructions on the [AWS CLI Documentation Page](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ![Installing AWS CLI](assets/week-0-img-1.png)
 I install the AWS CLI via this command in **Command Prompt**:
