@@ -69,3 +69,7 @@ CONTAINER_ID=$(docker run --rm -p 4567:4567 -d backend-flask)
 
 docker ps
 docker images
+
+## Get Access to a Container
+
+docker exec CONTAINER_ID -it /bin/bash
