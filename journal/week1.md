@@ -73,3 +73,33 @@ docker images
 ## Get Access to a Container
 
 docker exec CONTAINER_ID -it /bin/bash
+
+## Containerize Frontend
+
+## Run NPM Install
+
+We have to run NPM install before building the container since it needs to copy the contents of node_modules
+```
+cd frontend-react-js
+npm i
+```
+## Create Docker File
+Create a file here: frontend-react-js/Dockerfile
+
+```
+FROM node:20.9.0
+
+ENV PORT=3000
+
+COPY . /frontend-react-js
+WORKDIR /frontend-react-js
+RUN npm install
+EXPOSE ${PORT}
+CMD ["npm", "start"]
+```
+
+## Build Container
+
+```
+docker build -t frontend-react-js ./frontend-react-js
+```
