@@ -1,14 +1,13 @@
-openapi: '3.0.2'
+openapi: 3.0.2
 info:
   title: Cruddur Backend API
   version: '1.0'
-    
 servers:
   - url: https://api.server.test/v1
 paths:
   /api/activities/home:
     get:
-      description: 'Return a feed of activity based on all users'
+      description: Return a feed of activity based on all users
       tags:
         - activities
       responses:
@@ -22,7 +21,7 @@ paths:
                   $ref: '#/components/schemas/Activity'
   /api/activities/search:
     get:
-      description: 'Return a feed of activity based on a search term'
+      description: Return a feed of activity based on a search term
       tags:
         - activities
       parameters:
@@ -32,7 +31,7 @@ paths:
           required: true
           schema:
             type: string
-            example: "#100DaysOfCloud"
+            example: '#100DaysOfCloud'
       responses:
         '200':
           description: Returns an array of activities"
@@ -71,7 +70,7 @@ paths:
                   $ref: '#/components/schemas/Activity'
   /api/activities/@{handle}:
     get:
-      description: 'Return a feed of activity for a specific user'
+      description: Return a feed of activity for a specific user
       tags:
         - activities
       parameters:
@@ -92,7 +91,7 @@ paths:
                   $ref: '#/components/schemas/Activity'
   /api/message_groups:
     get:
-      description: 'Return a list of two way private conversations for the user'
+      description: Return a list of two way private conversations for the user
       tags:
         - messages
       responses:
@@ -106,7 +105,7 @@ paths:
                   $ref: '#/components/schemas/MessageGroup'
   /api/messages/@{handle}:
     get:
-      description: 'Returns private communication between two users'
+      description: Returns private communication between two users
       tags:
         - messages
       parameters:
@@ -127,7 +126,7 @@ paths:
                   $ref: '#/components/schemas/Message'
   /api/messages:
     post:
-      description: 'Create a direct message between two users'
+      description: Create a direct message between two users
       tags:
         - messages
       requestBody:
@@ -150,7 +149,7 @@ paths:
                   $ref: '#/components/schemas/Message'
   /api/activities/notifications:
     get:
-      description: 'Return a feed of activity for all of those I follow'
+      description: Return a feed of activity for all of those I follow
       tags:
         - activities
       parameters: []
@@ -163,7 +162,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Activity'
-
 components:
   schemas:
     Activity:
@@ -174,13 +172,13 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: Andrew Brown
         handle:
           type: string
-          example: "andrewbrown"
+          example: andrewbrown
         message:
           type: string
-          example: "Who likes pineapple on their pizza?"
+          example: Who likes pineapple on their pizza?
         replies_count:
           type: integer
           example: 5
@@ -192,10 +190,10 @@ components:
           example: 103
         created_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: '2023-02-06T18:11:03+00:00'
         expires_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: '2023-02-06T18:11:03+00:00'
     Reply:
       type: object
       properties:
@@ -207,10 +205,10 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         handle:
           type: string
-          example: "andrewbrown"
+          example: andrewbrown
         message:
           type: string
-          example: "Who likes pineapple on their pizza?"
+          example: Who likes pineapple on their pizza?
         replies_count:
           type: integer
           example: 5
@@ -222,8 +220,7 @@ components:
           example: 103
         created_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
-
+          example: '2023-02-06T18:11:03+00:00'
     Message:
       type: object
       properties:
@@ -232,16 +229,16 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: Andrew Brown
         handle:
           type: string
-          example: "andrewbrown"
+          example: andrewbrown
         message:
           type: string
-          example: "Who likes pineapple on their pizza?"
+          example: Who likes pineapple on their pizza?
         created_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: '2023-02-06T18:11:03+00:00'
     MessageGroup:
       type: object
       properties:
@@ -250,7 +247,7 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Worf"
+          example: Worf
         handle:
           type: string
-          example: "worf"
+          example: worf
