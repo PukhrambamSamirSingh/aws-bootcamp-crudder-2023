@@ -23,11 +23,13 @@ Amplify.configure({
   "aws_user_pools_web_client_id":process.env.REACT_APP_CLIENT_ID,
   "oauth":{},
   Auth: {
-    // We are not using an Identity pool
-    // identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID
-    region: process.env.REACT_APP_AWS_PROJECT_REGION,
-    userPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID,
-    userPoolWebClientId: process.env.REACT_APP_CLIENT_ID
+    Cognito:{
+      // We are not using an Identity pool
+      // identityPoolId: process.env.REACT_APP_IDENTITY_POOL_ID
+      region: process.env.REACT_APP_AWS_PROJECT_REGION,
+      userPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID,
+      userPoolClientId: process.env.REACT_APP_CLIENT_ID
+    }
   }
 })
 
