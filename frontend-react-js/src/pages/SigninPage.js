@@ -15,9 +15,10 @@ export default function SigninPage() {
   const onsubmit = async (event) => {
     event.preventDefault();
     setErrors('')
-    signIn({username:email,password})
+    signIn(email,password)
     .then(user=>{
-      localStorage.setItem('access_token',user.signInUserSession.accessToken.jwtToken)
+      console.log('user', user)
+      localStorage.setItem('access_token',user?.signInUserSession?.accessToken.jwtToken)
       window.location.href="/"
     })
     .catch(error=>{
