@@ -4,7 +4,6 @@ import {ReactComponent as Logo} from '../components/svg/logo.svg';
 import { Link } from "react-router-dom";
 
 // [TODO] Authenication
-import Cookies from 'js-cookie'
 import { signIn } from 'aws-amplify/auth';
 
 export default function SigninPage() {
@@ -16,7 +15,7 @@ export default function SigninPage() {
   const onsubmit = async (event) => {
     event.preventDefault();
     setErrors('')
-    signIn(email,password)
+    signIn({username:email,password})
     .then(user=>{
       localStorage.setItem('access_token',user.signInUserSession.accessToken.jwtToken)
       window.location.href="/"
