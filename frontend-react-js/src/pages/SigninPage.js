@@ -2,6 +2,7 @@ import './SigninPage.css';
 import React from "react";
 import {ReactComponent as Logo} from '../components/svg/logo.svg';
 import { Link } from "react-router-dom";
+import { signIn } from 'aws-amplify/auth';
 
 // [TODO] Authenication
 import Cookies from 'js-cookie'
@@ -12,16 +13,20 @@ export default function SigninPage() {
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState('');
 
-  const onsubmit = async (event) => {
-    event.preventDefault();
+  const onsubmit=async(event)=>{
     setErrors('')
-    console.log('onsubmit')
-    if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
-      Cookies.set('user.logged_in', true)
-      window.location.href = "/"
-    } else {
-      setErrors("Email and password is incorrect or account doesn't exist")
-    }
+    event.preventDefault()
+      signIn(email,password)
+      .then(user=>{
+        localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
+        window.location.href='/'
+      })
+      .catch(error=>{
+        if(error.code === 'UserNotConfiguredException'){
+          window.location.href="/confirm"
+        }
+        setErrors(error.message)
+      })
     return false
   }
 
