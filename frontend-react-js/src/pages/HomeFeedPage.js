@@ -1,6 +1,6 @@
 import './HomeFeedPage.css';
 import React from "react";
-import { getCurrentUser } from "aws-amplify/auth"
+import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth"
 
 import DesktopNavigation  from '../components/DesktopNavigation';
 import DesktopSidebar     from '../components/DesktopSidebar';
@@ -23,7 +23,10 @@ export default function HomeFeedPage() {
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
       const res = await fetch(backend_url, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        }
       });
       let resJson = await res.json();
       if (res.status === 200) {
@@ -38,16 +41,18 @@ export default function HomeFeedPage() {
 
  // ckeck if we are authenticated
  const checkAuth = async () => {
-  try {
-    const user = await getCurrentUser({ bypassCache: false });
-    console.log('user', user);
+  fetchUserAttributes()
+  .then(data=>{
+    console.log('user', user)
+    return fetchUserAttributes()
+  })
+  .then((cognito_user)=>{
     setUser({
-      display_name: user.attributes.name,
-      handle: user.attributes.preferred_username
-    });
-  } catch (error) {
-    console.error(error);
-  }
+      display_name: cognito_user.name,
+      handle: cognito_user.preferred_username
+    })
+  })
+  .catch((err)=>console.log(err))
 }
 
   React.useEffect(()=>{

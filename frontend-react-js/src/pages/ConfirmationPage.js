@@ -44,7 +44,12 @@ export default function ConfirmationPage() {
     event.preventDefault();
     setErrors('')
     try {
-      await confirmSignUp(email,code)
+      await confirmSignUp(
+        {
+          username: email,
+          confirmationCode: code
+        }
+      )
       window.location.href="/"
     } catch (error) {
       setErrors(error.message)
