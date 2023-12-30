@@ -4,7 +4,7 @@ import {ReactComponent as Logo} from '../components/svg/logo.svg';
 import { Link } from "react-router-dom";
 
 // [TODO] Authenication
-import { signUp,autoSignIn } from 'aws-amplify/auth';
+import { signUp } from 'aws-amplify/auth';
 
 export default function SignupPage() {
 
@@ -18,18 +18,23 @@ export default function SignupPage() {
   const onsubmit = async (event) => {
     event.preventDefault();
     setErrors('')
+    console.log('username',username);
+    console.log('email',email);
+    console.log('name',name);
     try {
-      const {user}=await signUp({
+      const { user } = await signUp({
         username: email,
         password: password,
-        attributes: {
-          name: name,
-          email: email,
-          preferred_username: username
-        },
-        autoSignIn:{
-          // optional - enables auto sign in after user is confirmed
-          enabled: true
+        options:{
+          userAttributes: {
+            name: name,
+            email: email,
+            preferred_username: username,
+          },
+          autoSignIn: {
+            // optional - enables auto sign in after user is confirmed
+            enabled: true,
+          },
         }
       })
       console.log(user)

@@ -24,7 +24,7 @@ export default function ConfirmationPage() {
   const resend_code = async (event) => {
     setErrors('')
     try {
-      await resendSignUpCode({username:email})
+      await resendSignUpCode(email)
       console.log('code resent successfully')
       setCodeSent(true)
     } catch (err) {
@@ -44,7 +44,12 @@ export default function ConfirmationPage() {
     event.preventDefault();
     setErrors('')
     try {
-      await confirmSignUp(email,code)
+      await confirmSignUp(
+        {
+          username: email,
+          confirmationCode: code
+        }
+      )
       window.location.href="/"
     } catch (error) {
       setErrors(error.message)
