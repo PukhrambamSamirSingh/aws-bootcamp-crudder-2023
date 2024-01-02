@@ -15,7 +15,8 @@
       "extensions": [
         "ms-azuretools.vscode-docker",
         "AmazonWebServices.aws-toolkit-vscode",
-        "ms-python.python"
+        "ms-python.python",
+        "ms-ossdata.vscode-postgresql"
       ]
     }
   }
