@@ -14,4 +14,11 @@ watchtower
 blinker
 rollbar
 
+<<<<<<< HEAD
 Flask-AWSCognito
+=======
+Flask-AWSCognito
+
+psycopg[binary]
+psycopg[pool]
+>>>>>>> origin/github-codespaces
