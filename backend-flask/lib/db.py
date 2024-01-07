@@ -1,31 +1,44 @@
 from psycopg_pool import ConnectionPool
 import os
 import re
+import sys
+from flask import current_app as app
 
 class Db:
   def __init__(self):
     self.init_pool()
+
+  def template(self, name):
+    template_path = os.path.join(app.root_path, 'db', 'sql', name + ".sql")
+    with open(template_path, 'r') as f:
+        template_content = f.read()
+    return template_content
 
   def init_pool(self):
     connection_url = os.getenv("CONNECTION_URL")
     self.pool = ConnectionPool(connection_url)\
   # when we want to commit data such as an insert
   # Be sure to for RETURNING in all uppercase
-  def query_commit(self, sql, *kwargs):
-    print('SQL Statement-[commit_with_returning_id]------')
+  def print_sql(self, title, sql):
+    cyan = '\033[96m'
+    no_color = '\033[0m'
+    print(f'{cyan}SQL Statement-[{title}]-----{no_color}-')
+  def query_commit(self, sql, params):
+    self.print_sql('commit with returning', sql)
     print(sql,'\n')
 
     pattern = r"\bRETURNING\b"
-    is_returning_id = re.search(pattern, my_string)
+    is_returning_id = re.search(pattern, sql)
     
     try:
-      conn = self.pool.connection()
-      cur = conn.cursor()
-      cur.execute(sql, kwargs)
-      if is_returning_id:
-        returning_id = cur.fetchone()[0]
-      conn.commit()
-      return returning_id
+      with self.pool.connection() as conn:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        if is_returning_id:
+          returning_id = cur.fetchone()[0]
+        conn.commit()
+        if is_returning_id:
+          return returning_id
     except Exception as error:
       self.print_sql_err(err)
   
@@ -70,7 +83,7 @@ class Db:
     {template}
     ) array_row);
     """
-  return sql
+    return sql
 
   def print_sql_err(self, err):
     # get details about the exception
@@ -82,9 +95,6 @@ class Db:
     # print the connect() error
     print ("\npsycopg2 ERROR:", err, "on line number:", line_num)
     print ("psycopg2 traceback:", traceback, "-- type:", err_type)
-
-    # psycopg2 extensions.Diagnostics object attribute
-    print ("\nextensions.Diagnostics:", err.diag)
 
     # print the pgcode and pgerror exceptions
     print ("pgerror:", err.pgerror)
