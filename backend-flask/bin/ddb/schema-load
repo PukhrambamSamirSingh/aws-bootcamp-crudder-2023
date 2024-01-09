@@ -13,10 +13,10 @@ if len(sys.argv) == 2:
 
 ddb = boto3.client('dynamodb', **attrs)
 
-table_name = 'crudder-message'
+table_name = 'crudder-messages'
 
 response = ddb.create_table(
-    TableName = table_name,
+    TableName=table_name,
     AttributeDefinitions=[
         {
             'AttributeName': 'pk',
