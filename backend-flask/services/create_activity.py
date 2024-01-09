@@ -38,10 +38,10 @@ class CreateActivity:
     if model['errors']:
       model['data'] = {
         'handle':  user_handle,
-        'message': message
-        'expires_at' = (now + ttl_offset)
+        'message': message,
       }   
     else:
+      expires_at = (now + ttl_offset)
       uuid = CreateActivity.create_activity(user_handle,message,expires_at)
 
       object_json = CreateActivity.query_object_activity(uuid)
