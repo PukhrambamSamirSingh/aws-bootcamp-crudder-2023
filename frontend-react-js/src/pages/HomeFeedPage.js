@@ -1,12 +1,12 @@
 import './HomeFeedPage.css';
 import React from "react";
-import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth"
 
 import DesktopNavigation  from '../components/DesktopNavigation';
 import DesktopSidebar     from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
+import CheckAuth from '../lib/CheckAuth';
 
 // [TODO] Authenication
 // import Cookies from 'js-cookie'
@@ -39,29 +39,13 @@ export default function HomeFeedPage() {
     }
   };
 
- // ckeck if we are authenticated
- const checkAuth = async () => {
-  fetchUserAttributes()
-  .then(data=>{
-    console.log('user', user)
-    return fetchUserAttributes()
-  })
-  .then((cognito_user)=>{
-    setUser({
-      display_name: cognito_user.name,
-      handle: cognito_user.preferred_username
-    })
-  })
-  .catch((err)=>console.log(err))
-}
-
   React.useEffect(()=>{
     //prevents double call
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
 
     loadData();
-    checkAuth();
+    CheckAuth({user,setUser});
   }, [])
 
   return (

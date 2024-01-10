@@ -34,7 +34,7 @@ def list_message_groups(client,my_user_uuid):
     response = client.query(**query_params)
     items = response['Items']
     
-
+    print('items::',items)
     results = []
     for item in items:
       last_sent_at = item['sk']['S']
