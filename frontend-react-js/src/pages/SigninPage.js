@@ -4,7 +4,7 @@ import {ReactComponent as Logo} from '../components/svg/logo.svg';
 import { Link } from "react-router-dom";
 
 // [TODO] Authenication
-import { signIn } from 'aws-amplify/auth';
+import { signIn, fetchAuthSession } from 'aws-amplify/auth';
 
 export default function SigninPage() {
 
@@ -15,21 +15,21 @@ export default function SigninPage() {
   const onsubmit = async (event) => {
     event.preventDefault();
     setErrors('')
-    signIn({
-      username: email,
-      password
-    })
-    .then(user=>{
-      console.log('user', user)
-      localStorage.setItem('access_token',user?.signInUserSession?.accessToken.jwtToken)
+    console.log('username',email);
+    console.log('password',password);
+    try {
+      const res=await signIn({
+        username: email,
+        password
+      })
+      console.log(res);
       window.location.href="/"
-    })
-    .catch(error=>{
+    } catch (error) {
       if (error.code==='UserNotConfirmedException') {
         window.location.href='/confirm'
       }
       setErrors(error.message)
-    })
+    }
     return false
   }
 

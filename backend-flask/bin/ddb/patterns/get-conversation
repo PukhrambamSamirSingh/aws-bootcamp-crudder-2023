@@ -3,7 +3,7 @@
 import boto3
 import sys
 import json
-import datetime
+from datetime import datetime
 
 attrs = {
   'endpoint_url': 'http://localhost:8000'
@@ -17,19 +17,19 @@ dynamodb = boto3.client('dynamodb',**attrs)
 table_name = 'crudder-messages'
 
 message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399"
-
+year = str(datetime.now().year)
 # define the query parameters
 query_params = {
   'TableName': table_name,
   'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
-#   'KeyConditionExpression': 'pk = :pk AND sk BETWEEN :start_date AND :end_date)',
+  # 'KeyConditionExpression': 'pk = :pk AND sk BETWEEN :start_date AND :end_date)',
   'ScanIndexForward': False,
   'Limit': 20,
   'ExpressionAttributeValues': {
-    ':pk': {'S': f"MSG#{message_group_uuid}"},
+    ':year': {'S': year},
     # ':start_date': {'S': '2024-01-01T00:00:00.000000+00:00'},
     # ':end_date': {'S': '2024-01-01T00:00:00.000000+00:00'},
-    ':year': {'S': '2024'}
+    ':pk': {'S': f"MSG#{message_group_uuid}"}
   },
   'ReturnConsumedCapacity': 'TOTAL'
 }
@@ -52,6 +52,6 @@ for item in reversed_array:
   sender_handle = item['user_handle']['S']
   message       = item['message']['S']
   timestamp     = item['sk']['S']
-  dt_object = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%f%z')
+  dt_object = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%f%z')
   formatted_datetime = dt_object.strftime('%Y-%m-%d %I:%M %p')
   print(f'{sender_handle: <16}{formatted_datetime: <22}{message[:40]}...')

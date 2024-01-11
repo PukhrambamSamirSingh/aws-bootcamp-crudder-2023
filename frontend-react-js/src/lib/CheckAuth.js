@@ -1,10 +1,12 @@
-import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth"
+import { fetchUserAttributes, fetchAuthSession } from "aws-amplify/auth"
 
 // ckeck if we are authenticated
-const CheckAuth = async ({user,setUser}) => {
-    fetchUserAttributes()
-    .then(data=>{
+const CheckAuth = async (setUser) => {
+  const fetchResult=await fetchAuthSession()
+  fetchUserAttributes()
+  .then(user=>{
       console.log('user', user)
+      console.log('authsession',fetchResult);
       return fetchUserAttributes()
     })
     .then((cognito_user)=>{
