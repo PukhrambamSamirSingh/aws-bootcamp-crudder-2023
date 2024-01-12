@@ -7,6 +7,7 @@ import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
 import CheckAuth from '../lib/CheckAuth';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 // [TODO] Authenication
 // import Cookies from 'js-cookie'
@@ -25,7 +26,7 @@ export default function HomeFeedPage() {
       const res = await fetch(backend_url, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+          Authorization: `Bearer ${(await fetchAuthSession()).tokens.accessToken.payload}`
         }
       });
       let resJson = await res.json();
@@ -47,6 +48,7 @@ export default function HomeFeedPage() {
     loadData();
     CheckAuth(setUser);
   }, [])
+  console.log('home:', user);
 
   return (
     <article>

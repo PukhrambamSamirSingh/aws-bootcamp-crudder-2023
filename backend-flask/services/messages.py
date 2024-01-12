@@ -20,4 +20,4 @@ class Messages:
     print(data)
 
     model['data'] = data
-    return
+    return model

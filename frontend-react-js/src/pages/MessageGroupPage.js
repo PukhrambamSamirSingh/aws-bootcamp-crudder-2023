@@ -7,6 +7,7 @@ import MessageGroupFeed from '../components/MessageGroupFeed';
 import MessagesFeed from '../components/MessageFeed';
 import MessagesForm from '../components/MessageForm';
 import CheckAuth from '../lib/CheckAuth';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 export default function MessageGroupPage() {
   const [messageGroups, setMessageGroups] = React.useState([]);
@@ -21,7 +22,7 @@ export default function MessageGroupPage() {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/messages/${params.message_group_uuid}`
       const res = await fetch(backend_url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+          Authorization: `Bearer ${(await fetchAuthSession()).tokens.accessToken.payload}`
         },
         method: "GET"
       });
@@ -34,7 +35,8 @@ export default function MessageGroupPage() {
     } catch (err) {
       console.log(err);
     }
-  };  
+  }; 
+  console.log('message',user); 
 
   const loadMessageGroupData = async () => {
     try {
