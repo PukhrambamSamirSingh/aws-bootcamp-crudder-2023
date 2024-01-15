@@ -1,0 +1,47 @@
+{
+    "family": "backend-flask",
+    "executionRoleArn": "arn:aws:iam::391722851137:role/CrudderServiceExecutionRole",
+    "taskRoleArn": "arn:aws:iam::391722851137:role/CrudderTaskRole",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+      {
+        "name": "backend-flask",
+        "image": "391722851137.dkr.ecr.ca-central-1.amazonaws.com/backend-flask",
+        "cpu": 256,
+        "memory": 512,
+        "essential": true,
+        "portMappings": [
+          {
+            "name": "backend-flask",
+            "containerPort": 4567,
+            "protocol": "tcp", 
+            "appProtocol": "http"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+              "awslogs-group": "crudder",
+              "awslogs-region": "ca-central-1",
+              "awslogs-stream-prefix": "backend-flask"
+          }
+        },
+        "environment": [
+          {"name": "OTEL_SERVICE_NAME", "value": "backend-flask"},
+          {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
+          {"name": "AWS_COGNITO_USER_POOL_ID", "value": "ca-central-1_dZK0DrOmB"},
+          {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "1g3h2tfnufi0g461ihqc516425"},
+          {"name": "FRONTEND_URL", "value": "*"},
+          {"name": "BACKEND_URL", "value": "*"},
+          {"name": "AWS_DEFAULT_REGION", "value": "ca-central-1"}
+        ],
+        "secrets": [
+          {"name": "AWS_ACCESS_KEY_ID"    , "valueFrom": "arn:aws:ssm:ca-central-1:391722851137:parameter/crudder/backend-flask/AWS_ACCESS_KEY_ID"},
+          {"name": "AWS_SECRET_ACCESS_KEY", "valueFrom": "arn:aws:ssm:ca-central-1:391722851137:parameter/crudder/backend-flask/AWS_SECRET_ACCESS_KEY"},
+          {"name": "CONNECTION_URL"       , "valueFrom": "arn:aws:ssm:ca-central-1:391722851137:parameter/crudder/backend-flask/CONNECTION_URL" },
+          {"name": "ROLLBAR_ACCESS_TOKEN" , "valueFrom": "arn:aws:ssm:ca-central-1:391722851137:parameter/crudder/backend-flask/ROLLBAR_ACCESS_TOKEN" },
+          {"name": "OTEL_EXPORTER_OTLP_HEADERS" , "valueFrom": "arn:aws:ssm:ca-central-1:391722851137:parameter/crudder/backend-flask/OTEL_EXPORTER_OTLP_HEADERS" }
+        ]
+      }
+    ]
+  }
