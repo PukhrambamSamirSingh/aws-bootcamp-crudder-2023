@@ -3,12 +3,12 @@
     "executionRoleArn": "arn:aws:iam::391722851137:role/CrudderServiceExecutionRole",
     "taskRoleArn": "arn:aws:iam::391722851137:role/CrudderTaskRole",
     "networkMode": "awsvpc",
+    "cpu": "256",
+    "memory": "512",
     "containerDefinitions": [
       {
         "name": "backend-flask",
         "image": "391722851137.dkr.ecr.ca-central-1.amazonaws.com/backend-flask",
-        "cpu": 256,
-        "memory": 512,
         "essential": true,
         "portMappings": [
           {
