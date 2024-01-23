@@ -1,0 +1,30 @@
+{
+    "cluster": "crudder",
+    "launchType": "FARGATE",
+    "desiredCount": 1,
+    "enableECSManagedTags": true,
+    "enableExecuteCommand": true,
+    "loadBalancers": [
+      {
+          "targetGroupArn": "arn:aws:elasticloadbalancing:ca-central-1:391722851137:targetgroup/crudder-backend-flask-tg/9a0d5f8ca73ddb45",
+          "containerName": "backend-flask",
+          "containerPort": 4567
+      }
+    ],
+    "networkConfiguration": {
+      "awsvpcConfiguration": {
+        "assignPublicIp": "ENABLED",
+        "securityGroups": [
+          "sg-0336618da11fc0f0b"
+        ],
+        "subnets": [
+          "subnet-020906008da1869af",
+          "subnet-065e35dbc69ded920",
+          "subnet-078158391d1413ec0"
+        ]
+      }
+    },
+    "propagateTags": "SERVICE",
+    "serviceName": "backend-flask",
+    "taskDefinition": "backend-flask"
+}

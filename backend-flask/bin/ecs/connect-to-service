@@ -1,0 +1,24 @@
+#! /usr/bin/bash
+
+if [ -z "$1" ]; then
+    echo "No TABLE_ID argument supplied e.g. ./bin/ecs/connect-to-service crudder-messages ab54446ea815461caeb5afd740a4681e backend-flask"
+    exit 1
+fi
+TASK_ID=$1
+
+if [ -z "$2" ]; then
+    echo "No CONTAINER_NAME argument supplied e.g. ./bin/ecs/connect-to-service crudder-messages ab54446ea815461caeb5afd740a4681e backend-flask"
+    exit 1
+fi
+CONTAINER_NAME=$2
+
+echo "Task ID: $TASK_ID"
+echo "Container Name: $CONTAINER_NAME"
+
+aws ecs execute-command \
+--region $AWS_DEFAULT_REGION \
+--cluster crudder \
+--task $TASK_ID \
+--container $CONTAINER_NAME \
+--command "/bin/bash" \
+--interactive
