@@ -5,6 +5,9 @@
     "networkMode": "awsvpc",
     "cpu": "256",
     "memory": "512",
+    "requiresCompatibilities": [ 
+      "FARGATE" 
+    ],
     "containerDefinitions": [
       {
         "name": "backend-flask",
@@ -41,8 +44,8 @@
           {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
           {"name": "AWS_COGNITO_USER_POOL_ID", "value": "ca-central-1_dZK0DrOmB"},
           {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "1g3h2tfnufi0g461ihqc516425"},
-          {"name": "FRONTEND_URL", "value": "*"},
-          {"name": "BACKEND_URL", "value": "*"},
+          {"name": "FRONTEND_URL", "value": "https://crudder.in"},
+          {"name": "BACKEND_URL", "value": "https://api.crudder.in"},
           {"name": "AWS_DEFAULT_REGION", "value": "ca-central-1"}
         ],
         "secrets": [
