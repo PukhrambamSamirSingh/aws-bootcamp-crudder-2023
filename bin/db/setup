@@ -10,7 +10,8 @@ printf "${CYAN}==== ${LABEL}${NO_COLOR}\n"
 NO_DB_CONNECTION_URL=$(sed 's/\/crudder//g' <<<"$CONNECTION_URL")
 psql $NO_DB_CONNECTION_URL -c "drop database crudder;"
 
-bin_path="$(realpath .)/bin"
+ABS_PATH=$(readlink -f "$0")
+bin_path=$(dirname $ABS_PATH)
 
 source "$bin_path/db/drop"
 source "$bin_path/db/create"
