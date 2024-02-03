@@ -4,9 +4,29 @@ ABS_PATH=$(readlink -f "$0")
 BACKEND_PATH=$(dirname $ABS_PATH)
 BIN_PATH=$(dirname $BACKEND_PATH)
 PROJECT_PATH=$(dirname $BIN_PATH)
-ENVFILE_PATH="$PROJECT_PATH/.env.backend-flask  "
+ENVFILE_PATH="$PROJECT_PATH/backend-flask.env"
 
+# FRONTEND_URL="https://3000-."
+# BACKEND_URL="https://4567-."
+# AWS_XRAY_URL="*4567-."
+# --env AWS_ENDPOINT_URL="http://dynamodb-local:8000" \
+# --env CONNECTION_URL="postgresql://crudderroot:goodDatabasePassword123@crudder-db-instance.csp6hbkywjzk.ca-central-1.rds.amazonaws.com:5432/crudder" \
+# --env CONNECTION_URL="postgresql://postgres:password@db:5432/crudder" \
+# --env FRONTEND_URL="https://psychic-telegram-pvv4xqvxgxv3wr6-3000.app.github.dev" \
+# --env BACKEND_URL="https://psychic-telegram-pvv4xqvxgxv3wr6-4567.app.github.dev" \
+# --env OTEL_SERVICE_NAME="backend-flask" \
+# --env OTEL_EXPORTER_OTLP_ENDPOINT="https://api.honeycomb.io" \
+# --env OTEL_EXPORTER_OTLP_HEADERS="x-honeycomb-team=I6J9dCd3GR3lia0XnRNMeD" \
+# --env AWS_XRAY_URL="*psychic-telegram-pvv4xqvxgxv3wr6-4567.app.github.dev*" \
+# --env AWS_XRAY_DAEMON_ADDRESS="xray-daemon:2000" \
+# --env AWS_DEFAULT_REGION="ca-central-1" \
+# --env AWS_ACCESS_KEY_ID="AKIAVWNEALNATAYICU2T" \
+# --env AWS_SECRET_ACCESS_KEY="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" \
+# --env ROLLBAR_ACCESS_TOKEN="49867b4327a34ed29b067f18e815aa95" \
+# --env AWS_COGNITO_USER_POOL_ID="ca-central-1_dZK0DrOmB" \
+# --env AWS_COGNITO_USER_POOL_CLIENT_ID="1g3h2tfnufi0g461ihqc516425" \
 docker run --rm \
 --env-file $ENVFILE_PATH \
--p 4567:4567 \
+--network crudder-net \
+--publish 4567:4567 \
 -it backend-flask-prod
