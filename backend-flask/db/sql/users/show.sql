@@ -4,6 +4,14 @@ SELECT
             users.uuid,
             users.handle,
             users.display_name
+<<<<<<< HEAD
+=======
+            (SELECT count(true)
+                FROM public.activities
+                WHERE
+                    activities.user_uuid = users.uuid
+            )  as cruds_count
+>>>>>>> fcf33f5 (implementing the frontend.)
     ) object_row) as profile
     (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
         SELECT  
