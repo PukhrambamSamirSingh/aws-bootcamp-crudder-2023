@@ -24,6 +24,7 @@ export default function ProfileHeading(props) {
         </div>
         <div className='info'>
             <div className='id'>
+                
                 {/* 
                     <div className='display_name'>{props.display_name}</div>
                     <div className='handle'>@{props.handle}</div>
