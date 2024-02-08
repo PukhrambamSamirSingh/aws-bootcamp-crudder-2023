@@ -6,15 +6,10 @@ import DesktopNavigation  from '../components/DesktopNavigation';
 import DesktopSidebar     from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
-<<<<<<< HEAD
 import EditProfileButton from '../components/EditProfileButton'
-
-// [TODO] Authenication
-import Cookies from 'js-cookie'
-=======
 import CheckAuth from '../lib/CheckAuth';
 import ProfileHeading from '../components/ProfileHeading';
->>>>>>> fcf33f5 (implementing the frontend.)
+
 
 export default function UserFeedPage() {
   const [activities, setActivities] = React.useState([]);
@@ -34,11 +29,7 @@ export default function UserFeedPage() {
       });
       let resJson = await res.json();
       if (res.status === 200) {
-<<<<<<< HEAD
-        setActivities(resJson.profile)
-=======
         setProfile(resJson.profile)
->>>>>>> fcf33f5 (implementing the frontend.)
         setActivities(resJson.activities)
       } else {
         console.log(res)
@@ -63,18 +54,12 @@ export default function UserFeedPage() {
       <div className='content'>
         <ActivityForm popped={popped} setActivities={setActivities} />
         <div className='activity_feed'>
-<<<<<<< HEAD
-          <div className='activity_feed_heading'>
-            <div className='title'>{title}</div>
-          </div>
-=======
           <ProfileHeading setPoppedProfile={setPoppedProfile} profile={profile}/>
           {/*
           <div className='activity_feed_heading'>
             <ProfileHeading profile={profile}/>
           </div>
           */}
->>>>>>> fcf33f5 (implementing the frontend.)
           <ActivityFeed activities={activities} />
         </div>
       </div>
