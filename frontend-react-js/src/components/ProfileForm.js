@@ -23,6 +23,7 @@ export default function ProfileForm(props) {
       const res = await fetch(backend_url, {
         method: "POST",
         headers: {
+          "Origin": "https://3000-pukhrambams-awsbootcamp-9rtb0asyc0j.ws-us108.gitpod.io",
           'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -30,6 +31,7 @@ export default function ProfileForm(props) {
       });
       let data = await res.json();
       if (res.status === 200) {
+        setPresignedUrl(data.url)
         console.log('presigned url', data);
       } else {
         console.log(res)
@@ -45,13 +47,12 @@ export default function ProfileForm(props) {
     const type = file.type
     const preview_image_url = URL.createObjectURL(file)
     console.log('file', file, filename, size, type)
+    const presignedUrl = await s3UploadKey()
+    console.log(presignedUrl)
 
-    // const formData = new FormData()
-    // formData.append('file', file)
     event.preventDefault();
     try {
-      const backend_url = ""
-      const res = await fetch(backend_url, {
+      const res = await fetch(presignedUrl, {
         method: "POST",
         headers: {
           'Content-Type': type
@@ -61,6 +62,7 @@ export default function ProfileForm(props) {
       let data = await res.json();
       if (res.status === 200) {
         console.log('presigned url', data);
+        return data.url
       } else {
         console.log(res)
       }
@@ -129,7 +131,7 @@ export default function ProfileForm(props) {
           </div>
           <div className="popup_content">
             <div className='upload' onClick={s3UploadKey}>
-                Upload Avatar For Real
+                Upload Avatar
             </div>
             <input type='file' name='avatarupload' onChange={s3Upload} accept='image/png, image/jpeg'/>
             <div className='upload' onClick={s3Upload}>
