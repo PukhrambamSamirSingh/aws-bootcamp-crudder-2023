@@ -2,7 +2,7 @@ import './ProfileForm.css';
 import React from "react";
 import process from 'process';
 import {getAccessToken} from 'lib/CheckAuth';
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+// const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 export default function ProfileForm(props) {
   const [bio, setBio] = React.useState("");
@@ -13,12 +13,15 @@ export default function ProfileForm(props) {
     setDisplayName(props.profile.display_name);
   }, [props.profile])
 
-  const s3UploadKey = async (event) => {
-    event.preventDefault();
+  const s3UploadKey = async (extension) => {
+    console.log("ext", extension)
     try {
       const gateway_url = `${process.env.REACT_APP_API_GATEWAY_ENDPOINT_URL}/avatars/key_upload`
       await getAccessToken()
       const access_token = localStorage.getItem("access_token")
+      const json = {
+        extension: extension
+      }
       const res = await fetch(gateway_url, {
         method: "POST",
         headers: {
@@ -26,11 +29,11 @@ export default function ProfileForm(props) {
           'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(json)
       });
       let data = await res.json();
       if (res.status === 200) {
-        setPresignedUrl(data.url)
         console.log('presigned url', data);
       } else {
         console.log(res)
@@ -40,19 +43,21 @@ export default function ProfileForm(props) {
     }
   }
   const s3Upload = async (event) => {
+    event.preventDefault();
     const file = event.target.files[0]
     const filename = file.name
     const size = file.size
     const type = file.type
-    const preview_image_url = URL.createObjectURL(file)
+    const previewImageUrl = URL.createObjectURL(file)
     console.log('file', file, filename, size, type)
-    const presignedUrl = await s3UploadKey()
-    console.log(presignedUrl)
+    const fileparts = filename.split(".")
+    const extension = fileparts[fileparts.length - 1]
 
-    event.preventDefault();
+    const presignedUrl = await s3UploadKey(extension)
+
     try {
       const res = await fetch(presignedUrl, {
-        method: "POST",
+        method: "PUT",
         headers: {
           'Content-Type': type
         },
