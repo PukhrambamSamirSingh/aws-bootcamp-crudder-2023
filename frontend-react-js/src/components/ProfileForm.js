@@ -5,11 +5,10 @@ import {getAccessToken} from 'lib/CheckAuth';
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 export default function ProfileForm(props) {
-  const [bio, setBio] = React.useState(0);
-  const [displayName, setDisplayName] = React.useState(0);
+  const [bio, setBio] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
 
   React.useEffect(()=>{
-    console.log('useEffects',props)
     setBio(props.profile.bio);
     setDisplayName(props.profile.display_name);
   }, [props.profile])
@@ -17,13 +16,13 @@ export default function ProfileForm(props) {
   const s3UploadKey = async (event) => {
     event.preventDefault();
     try {
-      const backend_url = `https://yszcnqsl4e.execute-api.ca-central-1.amazonaws.com/avatars/key_upload`
+      const gateway_url = `${process.env.REACT_APP_API_GATEWAY_ENDPOINT_URL}/avatars/key_upload`
       await getAccessToken()
       const access_token = localStorage.getItem("access_token")
-      const res = await fetch(backend_url, {
+      const res = await fetch(gateway_url, {
         method: "POST",
         headers: {
-          "Origin": "https://3000-pukhrambams-awsbootcamp-9rtb0asyc0j.ws-us108.gitpod.io",
+          "Origin": process.env.REACT_APP_FRONTEND_URL,
           'Authorization': `Bearer ${access_token}`,
           'Accept': 'application/json',
           'Content-Type': 'application/json'
