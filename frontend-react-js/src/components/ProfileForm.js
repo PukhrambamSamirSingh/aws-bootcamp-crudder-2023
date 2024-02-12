@@ -66,9 +66,8 @@ export default function ProfileForm(props) {
       let data = await res.json();
       if (res.status === 200) {
         console.log('presigned url', data);
-        return data.url
       } else {
-        console.log(res)
+        console.log(data)
       }
     } catch (err) {
       console.log(err);
