@@ -5,6 +5,7 @@ import React from "react";
 // [TODO] Authenication
 // import { Auth } from 'aws-amplify'
 import { signOut } from 'aws-amplify/auth';
+import ProfileAvatar from './ProfileAvatar';
 export default function ProfileInfo(props) {
 
   const [popped, setPopped] = React.useState(false);
@@ -37,6 +38,7 @@ export default function ProfileInfo(props) {
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
       <div className="profile-info" onClick={click_pop}>
+        <ProfileAvatar id={props.user.cognito_user_uuid} />
         <div className="profile-avatar"></div>
         <div className="profile-desc">
           <div className="profile-display-name">{props.user.display_name || "My Name" }</div>

@@ -17,6 +17,7 @@ const CheckAuth = async (setUser) => {
   .then((cognito_user)=>{
     console.log('cognito_user',cognito_user);
     setUser({
+      cognito_user_uuid:cognito_user.sub,
       display_name: cognito_user.name,
       handle: cognito_user.preferred_username
     })
